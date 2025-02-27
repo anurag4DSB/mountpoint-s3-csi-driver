@@ -1,0 +1,20 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: kube-system
+
+# Reference the base from the original repository
+resources:
+- github.com/kubernetes-sigs/aws-s3-csi-driver/deploy/kubernetes/base
+
+# # Add your custom secret
+# secretGenerator:
+# - name: s3-creds-2
+#   namespace: kube-system
+#   literals:
+#   - key_id=accessKey1
+#   - access_key=verySecretKey1
+#   - endpoint=http://192.168.1.70:8000
+# # Patch the deployment to add your custom S3 endpoint and credentials
+patchesStrategicMerge:
+- node-patch.yaml

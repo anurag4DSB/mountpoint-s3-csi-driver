@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: s3-csi-node
+  namespace: kube-system
+spec:
+  template:
+    spec:
+      containers:
+      - name: s3-plugin
+        env:
+        - name: AWS_ACCESS_KEY_ID
+          valueFrom:
+            secretKeyRef:
+              name: s3-creds-2
+              key: key_id
+        - name: AWS_SECRET_ACCESS_KEY
+          valueFrom:
+            secretKeyRef:
+              name: s3-creds-2
+              key: access_key
+        - name: AWS_ENDPOINT
+          valueFrom:
+            secretKeyRef:
+              name: s3-creds-2
+              key: endpoint
+        - name: AWS_S3_FORCE_PATH_STYLE
+          value: "true"
